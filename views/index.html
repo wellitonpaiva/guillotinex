@@ -1,0 +1,157 @@
+{{ block "index" . }}
+<html>
+
+<head>
+    <title>GuillotineX</title>
+    <script src="https://unpkg.com/htmx.org/dist/htmx.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Guillotine X</h1>
+    <h2>Guess the word or off with your head!</h2>
+
+    <h1>Attempts left: {{.Attempts}}</h1>
+
+    <div style="display:inline-flex">
+        <div style="display:inline">
+            <h2 id="S">{{index .Guessed 0}}</h2>
+        </div>
+        <p>&nbsp;</p>
+        <div style="display:inline">
+            <h2 id="H">{{index .Guessed 1}}</h2>
+        </div style="display:inline">
+        <p>&nbsp;</p>
+        <div>
+            <h2 id="I">{{index .Guessed 2}}</h2>
+        </div>
+        <p>&nbsp;</p>
+        <div style="display:inline">
+            <h2 id="P">{{index .Guessed 3}}</h2>
+        </div>
+    </div>
+
+
+    {{if eq .Attempts 4}}
+    {{template "guillotine4" .}}
+    {{else if eq .Attempts 3}}
+    {{template "guillotine3" .}}
+    {{else if eq .Attempts 2}}
+    {{template "guillotine2" .}}
+    {{else if eq .Attempts 1}}
+    {{template "guillotine1" .}}
+    {{end}}
+
+    <div>
+        {{ range $key, $value := .Pressed }}
+        {{ if $value }}
+        {{ template "button-disabled" $key }}
+        {{ else }}
+        {{ template "button" $key }}
+        {{ end }}
+        {{ end }}
+    </div>
+</body>
+
+</html>
+{{ end }}
+
+{{ block "button" . }}
+<div id="{{.}}" style="display:inline">
+    <button hx-trigger="click" hx-post="/try/{{.}}" hx-target="body">{{.}}</button>
+</div>
+{{ end }}
+
+{{ block "button-disabled" . }}
+<div id="{{.}}" style="display:inline">
+    <button disabled>{{.}}</button>
+</div>
+{{ end }}
+
+{{ block "win" . }}
+<h1>You won!</h1>
+{{ end }}
+
+{{ block "lost" . }}
+<h1>You lost</h1>
+{{ end }}
+
+{{ block "guillotine4" .}}
+<div>
+    <br>&nbsp;&nbsp;&nbsp;______
+    <br>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|_____&nbsp;|
+    <br>&nbsp;_|_(&nbsp;&nbsp;&nbsp;&nbsp;)_|_
+</div>
+{{end}}
+
+{{ block "guillotine3" .}}
+<div>
+    <br>&nbsp;&nbsp;&nbsp;______
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|_____&nbsp;|
+    <br>&nbsp;_|_(&nbsp;&nbsp;&nbsp;&nbsp;)_|_
+</div>
+{{end}}
+{{ block "guillotine2" .}}
+<div>
+    <br>&nbsp;&nbsp;&nbsp;______
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|_____&nbsp;|
+    <br>&nbsp;_|_(&nbsp;&nbsp;&nbsp;&nbsp;)_|_
+</div>
+{{end}}
+{{ block "guillotine1" .}}
+<div>
+    <br>&nbsp;&nbsp;&nbsp;______
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;|
+    <br>&nbsp;&nbsp;&nbsp;|_____&nbsp;|
+    <br>&nbsp;_|_(&nbsp;&nbsp;&nbsp;&nbsp;)_|_
+</div>
+{{end}}
+
+
